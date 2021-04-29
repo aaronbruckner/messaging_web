@@ -1,6 +1,7 @@
 import './App.css';
 import InboxPage from "components/pages/InboxPage";
 import Thread from 'data/Thread';
+import _ from 'lodash';
 
 const mockThreads: Thread[] = [
   {
@@ -30,6 +31,18 @@ const mockThreads: Thread[] = [
     ]
   }
 ];
+
+for (let i = 0; i < 100; i++) {
+  mockThreads.push({
+    threadId: `thread${i}`,
+    messages: [
+      {
+        authorId: `AutoGenAuthor${i}`,
+        content: `My Auto-Generated Message ${i}`
+      }
+    ]
+  });
+}
 
 function App() {
   return (
