@@ -1,7 +1,11 @@
 import './App.css';
 import InboxPage from "components/pages/InboxPage";
 import Thread from 'data/Thread';
-import _ from 'lodash';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
 
 const mockThreads: Thread[] = [
   {
@@ -46,9 +50,15 @@ for (let i = 0; i < 100; i++) {
 
 function App() {
   return (
-    <div className="App">
-      <InboxPage threads={mockThreads}/>
-    </div>
+    <Router>
+      <div className="App">
+        <Switch>
+          <Route path="/inbox">
+            <InboxPage threads={mockThreads}/>
+          </Route>
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
