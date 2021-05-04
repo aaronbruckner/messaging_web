@@ -48,7 +48,7 @@ for (let i = 0; i < 100; i++) {
   });
 }
 
-function App() {
+function App(): JSX.Element {
   return (
     <Router>
       <div className="App">

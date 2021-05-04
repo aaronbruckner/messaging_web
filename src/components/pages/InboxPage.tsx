@@ -6,7 +6,7 @@ type InboxPageProps = {
     threads: Thread[],
 }
 
-export default class Inbox extends React.Component<InboxPageProps, any> {
+export default class Inbox extends React.Component<InboxPageProps, unknown> {
     
     public render(): React.ReactNode {
         return (<div className="page-inbox">
