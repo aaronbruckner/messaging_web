@@ -1,3 +1,4 @@
+import './InboxPage.css'
 import * as React from 'react';
 import Thread from 'data/Thread';
 
