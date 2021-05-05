@@ -1,10 +1,12 @@
 import './App.css';
 import InboxPage from "components/pages/InboxPage";
+import ThreadPage from "components/pages/ThreadPage";
 import Thread from 'data/Thread';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  useParams
 } from "react-router-dom";
 
 const mockThreads: Thread[] = [
@@ -56,10 +58,20 @@ function App(): JSX.Element {
           <Route path="/inbox">
             <InboxPage threads={mockThreads}/>
           </Route>
+          <Route path='/thread/:threadId'>
+            <ThreadPageWrapper/>
+          </Route>
         </Switch>
       </div>
     </Router>
   );
+}
+
+function ThreadPageWrapper(): JSX.Element {
+  const {threadId} = useParams<{threadId: string}>()
+  return (
+    <ThreadPage threadId={threadId}/>
+  )
 }
 
 export default App;
