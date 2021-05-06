@@ -1,5 +1,6 @@
 import {ReactNode, Component} from 'react';
 import Thread from 'data/Thread';
+import Button from 'components/ui/Button';
 
 interface ThreadPageProps {
     thread: Thread | undefined;
@@ -19,6 +20,7 @@ export default class ThreadPage extends Component<ThreadPageProps, unknown> {
                 <div>
                     {this.buildMessages(this.props.thread)}
                 </div>
+                <Button onClick={this.onSendMessageButtonClicked} text='Send'/>
             </div>
         )
     }
@@ -29,5 +31,9 @@ export default class ThreadPage extends Component<ThreadPageProps, unknown> {
                 <p>{m.content}</p>
             );
         });
+    }
+
+    private onSendMessageButtonClicked(): void {
+        console.log('onSendMessageButtonClicked()');
     }
 }
