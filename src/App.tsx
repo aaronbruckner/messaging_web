@@ -8,6 +8,7 @@ import {
   Route,
   useParams
 } from "react-router-dom";
+import _ from 'lodash';
 
 const mockThreads: Thread[] = [
   {
@@ -15,7 +16,7 @@ const mockThreads: Thread[] = [
     messages: [
       {
         authorId: "Author1",
-        content: "Nothing much.. Just bored. Are you doing anything cool?",
+        content: "Hey! How are you?",
       },
       {
         authorId: "Author2",
@@ -23,8 +24,8 @@ const mockThreads: Thread[] = [
       },
       {
         authorId: "Author1",
-        content: "Hey! How are you?",
-      }
+        content: "Nothing much.. Just bored. Are you doing anything cool?",
+      },
     ]
   },
   {
@@ -70,7 +71,7 @@ function App(): JSX.Element {
 function ThreadPageWrapper(): JSX.Element {
   const {threadId} = useParams<{threadId: string}>()
   return (
-    <ThreadPage threadId={threadId}/>
+    <ThreadPage thread={_.find(mockThreads, (t) => t.threadId === threadId)}/>
   )
 }
 
