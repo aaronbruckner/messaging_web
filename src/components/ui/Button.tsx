@@ -2,6 +2,7 @@ import {ReactNode, Component, MouseEvent} from 'react';
 
 interface ButtonProps {
     text?: string;
+    enabled?: boolean;
     onClick?: (() => void);
 }
 export default class Button extends Component<ButtonProps, unknown>{
@@ -14,7 +15,7 @@ export default class Button extends Component<ButtonProps, unknown>{
     
     public render(): ReactNode {
         return (
-            <button onClick={this.buttonOnClick}>{this.props.text || ''}</button>
+            <button disabled={this.props.enabled === false} onClick={this.buttonOnClick}>{this.props.text || ''}</button>
         );
     }
 
