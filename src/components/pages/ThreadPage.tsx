@@ -3,9 +3,10 @@ import Thread from 'data/Thread';
 import Button from 'components/ui/Button';
 import Input from 'components/ui/Input';
 import {RootState} from 'state/interfaces';
+import {addMessage} from 'state/actions/dataActions';
 import _ from 'lodash';
 import { useParams } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 /**
  * Displays all messages for a specific communication context (one-on-one, group, etc).
@@ -14,6 +15,7 @@ export default function ThreadPage(): JSX.Element | null {
     const {threadId} = useParams<{threadId: string}>();
     const [newMessageContent, setNewMessageContent] = useState('');
     const thread = useSelector<RootState, Thread | undefined>((state) => _.find(state.data.threads, (t) => t.threadId === threadId));
+    const dispatch = useDispatch();
 
     function buildMessages(): JSX.Element[] | undefined {
         return thread?.messages.map(m => {
@@ -28,7 +30,10 @@ export default function ThreadPage(): JSX.Element | null {
     }
 
     function onSendMessageButtonClicked(): void {
-        alert(`Message to Send:\n\n${newMessageContent}`);
+        dispatch(addMessage({
+            threadId,
+            newMessageContent
+        }))
         setNewMessageContent('');
     }
 

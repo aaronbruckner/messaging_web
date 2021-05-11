@@ -1,5 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
 import Thread from 'data/Thread';
+import {addMessage} from 'state/actions/dataActions';
 
 interface DataState {
     threads: Thread[];
@@ -47,7 +48,13 @@ for (let i = 0; i < 100; i++) {
 }
 
 const dataReducer = createReducer<DataState>({threads: mockThreads}, (builder) => {
-    // TODO
+    builder.addCase(addMessage, (state, action) => {
+        const thread = state.threads.find((t) => t.threadId === action.payload.threadId);
+        thread?.messages.push({
+            authorId: "TODO",
+            content: action.payload.newMessageContent
+        })
+    });
 });
 
 export default dataReducer;
