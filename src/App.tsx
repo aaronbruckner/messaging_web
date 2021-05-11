@@ -1,78 +1,38 @@
 import './App.css';
 import InboxPage from "components/pages/InboxPage";
 import ThreadPage from "components/pages/ThreadPage";
-import Thread from 'data/Thread';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  useParams
 } from "react-router-dom";
-import _ from 'lodash';
+import { Provider } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
+import dataReducer from 'state/reducers/dataReducer';
 
-const mockThreads: Thread[] = [
-  {
-    threadId: "ThreadOne",
-    messages: [
-      {
-        authorId: "Author1",
-        content: "Hey! How are you?",
-      },
-      {
-        authorId: "Author2",
-        content: "I'm fine. What are you up to?",
-      },
-      {
-        authorId: "Author1",
-        content: "Nothing much.. Just bored. Are you doing anything cool?",
-      },
-    ]
-  },
-  {
-    threadId: "ThreadTwo",
-    messages: [
-      {
-        authorId: "Author3",
-        content: "Did you see my latest message?",
-      }
-    ]
+const store = configureStore({
+  reducer: {
+    data: dataReducer
   }
-];
-
-for (let i = 0; i < 100; i++) {
-  mockThreads.push({
-    threadId: `thread${i}`,
-    messages: [
-      {
-        authorId: `AutoGenAuthor${i}`,
-        content: `My Auto-Generated Message ${i}`
-      }
-    ]
-  });
-}
+});
 
 function App(): JSX.Element {
   return (
-    <Router>
-      <div className="App">
-        <Switch>
-          <Route path="/inbox">
-            <InboxPage threads={mockThreads}/>
-          </Route>
-          <Route path='/thread/:threadId'>
-            <ThreadPageWrapper/>
-          </Route>
-        </Switch>
-      </div>
-    </Router>
+    <Provider store={store}>
+      <Router>
+        <div className="App">
+          <Switch>
+            <Route path="/inbox">
+              <InboxPage/>
+            </Route>
+            <Route path='/thread/:threadId'>
+              <ThreadPage/>
+            </Route>
+          </Switch>
+        </div>
+      </Router>
+    </Provider>
   );
-}
-
-function ThreadPageWrapper(): JSX.Element {
-  const {threadId} = useParams<{threadId: string}>()
-  return (
-    <ThreadPage thread={_.find(mockThreads, (t) => t.threadId === threadId)}/>
-  )
 }
 
 export default App;

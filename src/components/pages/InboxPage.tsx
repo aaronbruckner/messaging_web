@@ -1,24 +1,15 @@
 import './InboxPage.css'
-import * as React from 'react';
 import Thread from 'data/Thread';
 import {Link} from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import {RootState} from 'state/interfaces';
 
-type InboxPageProps = {
-    threads: Thread[],
-}
+export default function InboxPage(): JSX.Element {
+    const threads = useSelector<RootState, Thread[]>((state) => {
+        return state.data.threads;
+    });
 
-export default class Inbox extends React.Component<InboxPageProps, unknown> {
-    
-    public render(): React.ReactNode {
-        return (<div className="page-inbox">
-            <div>
-                <h1>Messages</h1>
-                {this.generateThreadSummaries(this.props.threads)}
-            </div>
-        </div>);
-    }
-
-    private generateThreadSummaries(threads: Thread[]): React.ReactNode {
+    function generateThreadSummaries(threads: Thread[]): JSX.Element[] {
         return threads.map((t: Thread) => 
             (
                 <Link to={`/thread/${t.threadId}`}>
@@ -28,6 +19,12 @@ export default class Inbox extends React.Component<InboxPageProps, unknown> {
                 </Link>
             )
         )
-        
     }
+
+    return (<div className="page-inbox">
+        <div>
+            <h1>Messages</h1>
+            {generateThreadSummaries(threads)}
+        </div>
+    </div>);
 }
